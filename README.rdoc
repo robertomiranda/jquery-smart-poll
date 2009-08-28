@@ -6,8 +6,20 @@ Tiny jQuery polling library.
 == Example
 
 Below will poll the uri 'something' until a request is successful.
+Each request will be delayed an extra 50% to prevent flooding the server.
 
    $.poll(function(retry){
+     $.get('something', function(response, status){
+       if (status == 'success')
+         // Do something
+       else
+         retry()
+     })
+   })
+   
+Or specify the interval (10 seconds)
+
+   $.poll(10000, function(retry){
      $.get('something', function(response, status){
        if (status == 'success')
          // Do something
